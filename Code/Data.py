@@ -1,5 +1,9 @@
+import os
+from shutil import which
 from colorama import Fore as Color
 from pathlib import Path
+
+import requests
 
 Error_Info = Color.RED + "E: " + Color.RESET
 Progress_Info = Color.GREEN + "I: " + Color.RESET
@@ -9,8 +13,23 @@ Path_Patch = f"{Get_Home}/.ElaXan/Patch"
 Path_Module = f"{Path_Patch}/lspatch.jar"
 Path_Module_LSPosed = f"{Path_Patch}/app-release.apk"
 Link_LSPatch = "https://github.com/LSPosed/LSPatch/releases/download/v0.5/lspatch.jar"
-Link_Module_LSPosed = "https://elaxan.com/Download/Genshin-Android/app-release.apk"
+Link_Module_LSPosed = "https://elaxan.com/download/Genshin-Android/app-release.apk"
 
 def subcommand_Print():
+    # If subcommand not entered, this message will appear
     print(Color.YELLOW + "Subcommand Not entered!" + Color.RESET)
+    # Exit script with code 1
     exit(1)
+
+def Download_Files(url: str, path: str):
+    Download = requests.get(url, allow_redirects=True)
+    with open(path, "wb") as Downloading:
+        Downloading.write(Download.content)
+        Downloading.close()
+
+def Download_Files2(url: str, path: str):
+    # Check if command wget is not installed
+    if not (which("wget")):
+        print(Progress_Info + "Installing wget command")
+        os.system("apt install wget -y &> /dev/null")
+    os.system("wget " + url + " -O " + path + " &>/dev/null")
