@@ -5,7 +5,7 @@ Patching APK and embed module for no root user can use a LSPosed Module.
 ## Requirements
 * Python
 * Java
-* Termux
+* Termux [ONLY FOR ANDROID]
 
 # Install
 TODO
