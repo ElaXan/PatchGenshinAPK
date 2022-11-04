@@ -3,7 +3,6 @@ from shutil import which
 from colorama import Fore as Color
 from pathlib import Path
 from time import sleep
-
 import requests
 
 Error_Info = Color.RED + "E: " + Color.RESET

@@ -1,14 +1,16 @@
-# LSPatch
+# PatchGenshinAPK
 [LSPatch](https://github.com/LSPosed/LSPatch)\
-Patching APK and embed module for no root user can use a LSPosed Module.
+Patching APK and embed module for no root user can use a LSPosed Module.\
+Im targeting to Android user for use this
 
 ## Requirements
 * Python
 * Java
-* Termux [ONLY FOR ANDROID]
+* Termux
 
 # Install
 TODO
 
-# Issue
-Cannot download a .apk module from my website, i need help seriously
+# How to use
+Sadly there is no tutorial how to use this.\
+You should know what are you doing
