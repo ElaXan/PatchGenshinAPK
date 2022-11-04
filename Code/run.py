@@ -1,5 +1,6 @@
 import shutil
 import os
+import re
 import Code.Data as Data
 from shutil import which
 from time import sleep
@@ -59,7 +60,7 @@ def run():
         # Start patching Genshin .apk
         os.system("java -jar lspatch.jar " + Getting_FileName + " -m " + Getting_FileName_Module)
         print(Data.Progress_Info + "Trying to move apk")
-        Name_Patch = Getting_FileName.replace(".apk", "")
+        Name_Patch = re.sub(r".apk$", "", Getting_FileName)
         shutil.move(Name_Patch + "-348-lspatched.apk", f"/sdcard/{Name_Patch}-ElaXan.apk")
         print(Data.Progress_Info + f"Done Move file to /sdcard/{Name_Patch}-ElaXan.apk")
     except Exception as e:
