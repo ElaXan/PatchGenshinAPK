@@ -1,6 +1,5 @@
 import shutil
 import os
-import requests
 import Code.Data as Data
 from shutil import which
 from time import sleep
@@ -56,6 +55,10 @@ def run():
         print(Data.Progress_Info + "Patching Genshin .apk")
         # Start patching Genshin .apk
         os.system("java -jar lspatch.jar " + Getting_FileName + " -m " + Getting_FileName_Module)
+        print(Data.Progress_Info + "Trying to move apk")
+        Name_Patch = Getting_FileName.replace(".apk", "")
+        shutil.move(Name_Patch + "-348-lspatched.apk", f"/sdcard/{Name_Patch}-ElaXan.apk")
+        print(Data.Progress_Info + f"Done Move file to /sdcard/{Name_Patch}-ElaXan.apk")
     except Exception as e:
-        print(Data.Error_Info + "Error while patching.\nReason : ",e)
+        print(f"Failed patch {Getting_FileName}.\nReason : ", e)
         exit(1)
