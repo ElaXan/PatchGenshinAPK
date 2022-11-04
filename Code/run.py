@@ -6,18 +6,21 @@ from shutil import which
 from time import sleep
 from pathlib import Path
 
-def run():
+def run(file_apk_to_patch: str):
     # Check if java is installed
     if not (which("java")):
         print(Data.Progress_Info + "Installing Java")
         os.system("apt install openjdk-17 -y")
-    user_input = input("Enter file Genshin.apk : ")
-    if (user_input == ""):
-        while (user_input == ""):
-            # If user not entered path to Genshin.apk
-            print(Data.Error_Info + "Please enter path!")
-            sleep(1)
-            user_input = input("Enter file Genshin.apk : ")
+    if (file_apk_to_patch == ""):
+        user_input = input("Enter file Genshin.apk : ")
+        if (user_input == ""):
+            while (user_input == ""):
+                # If user not entered path to Genshin.apk
+                print(Data.Error_Info + "Please enter path!")
+                sleep(1)
+                user_input = input("Enter file Genshin.apk : ")
+    else:
+        user_input = file_apk_to_patch
     if not (os.path.exists(user_input)):
         # If file not found, this message will be appears
         print(Data.Error_Info + "File for " + user_input + " Not exist")
