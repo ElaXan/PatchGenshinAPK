@@ -2,6 +2,7 @@ import os
 from shutil import which
 from colorama import Fore as Color
 from pathlib import Path
+from time import sleep
 
 import requests
 
@@ -32,4 +33,5 @@ def Download_Files2(url: str, path: str):
     if not (which("wget")):
         print(Progress_Info + "Installing wget command")
         os.system("apt install wget -y &> /dev/null")
-    os.system("wget " + url + " -O " + path + " &>/dev/null")
+    os.system("wget " + url + " -O " + path + " > /dev/null 2>&1")
+    sleep(1)
