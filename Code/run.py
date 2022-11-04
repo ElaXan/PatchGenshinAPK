@@ -22,6 +22,9 @@ def run():
         print(Data.Error_Info + "File for " + user_input + " Not exist")
         exit(1)
     # If Folder not found, will be create immediately
+    if not user_input.endswith(".apk"):
+        print(Data.Error_Info + f"File for {user_input} is not .apk")
+        exit(1)
     if not (os.path.exists(f"{Path.home()}/.ElaXan")):
         os.mkdir(f"{Path.home()}/.ElaXan")
     if not (os.path.exists(Data.Path_Patch)):
