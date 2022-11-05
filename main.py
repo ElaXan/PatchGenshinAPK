@@ -14,7 +14,9 @@ if __name__ == "__main__":
                 Menu.Uninstall()
             else:
                 print(Data.Usage)
-        elif not subcommand == "":
-            run.run(subcommand)
     except IndexError:
-        run.run("")
+        try:
+            if not subcommand == "":
+                run.run(subcommand)
+        except NameError:
+            run.run("")
