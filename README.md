@@ -9,7 +9,10 @@ Im targeting to Android user for use this
 * Termux
 
 # Install
-TODO
+Copy this command and paste to Termux
+```bash
+bash <(curl -Ls https://raw.githubusercontent.com/Score-Inc/PatchGenshinAPK/main/install.sh)
+```
 
 # How to use
 Sadly there is no tutorial how to use this.\
