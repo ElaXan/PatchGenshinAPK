@@ -1,3 +1,4 @@
+apt update && apt upgrade
 if ! (command -v git &> /dev/null); then 
     apt install git -y
 fi
