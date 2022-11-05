@@ -16,7 +16,10 @@ if __name__ == "__main__":
                 print(Data.Usage)
     except IndexError:
         try:
-            if not subcommand == "":
+            if subcommand == "-m":
+                print(Data.Usage)
+                exit(1)
+            elif not subcommand == "":
                 run.run(subcommand)
         except NameError:
             run.run("")
