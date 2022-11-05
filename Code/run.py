@@ -12,13 +12,17 @@ def run(file_apk_to_patch: str):
         print(Data.Progress_Info + "Installing Java")
         os.system("apt install openjdk-17 -y")
     if (file_apk_to_patch == ""):
-        user_input = input("Enter file Genshin.apk : ")
-        if (user_input == ""):
-            while (user_input == ""):
-                # If user not entered path to Genshin.apk
-                print(Data.Error_Info + "Please enter path!")
-                sleep(1)
-                user_input = input("Enter file Genshin.apk : ")
+        try:
+            user_input = input("Enter file Genshin.apk : ")
+            if (user_input == ""):
+                while (user_input == ""):
+                    # If user not entered path to Genshin.apk
+                    print(Data.Error_Info + "Please enter path!")
+                    sleep(1)
+                    user_input = input("Enter file Genshin.apk : ")
+        except KeyboardInterrupt:
+            print("Exit/Cancel by User")
+            exit(1)
     else:
         user_input = file_apk_to_patch
     if not (os.path.exists(user_input)):
