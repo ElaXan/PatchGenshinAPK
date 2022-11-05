@@ -1,4 +1,5 @@
 import os
+import sys
 from shutil import which
 from colorama import Fore as Color
 from pathlib import Path
@@ -14,6 +15,7 @@ Path_Module = f"{Path_Patch}/lspatch.jar"
 Path_Module_LSPosed = f"{Path_Patch}/app-release.apk"
 Link_LSPatch = "https://github.com/LSPosed/LSPatch/releases/download/v0.5/lspatch.jar"
 Link_Module_LSPosed = "https://elaxan.com/download/Genshin-Android/app-release.apk"
+Usage = f"{Error_Info}Subcommand not entered!\nUsage :\n1. {os.path.basename(sys.argv[0])} -m uninstall\n2. TODO"
 
 def Download_Files(url: str, path: str):
     Download = requests.get(url, allow_redirects=True)

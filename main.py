@@ -1,12 +1,20 @@
 #!/data/data/com.termux/files/usr/bin/python3
 
 import Code.run as run
+import Code.Menu as Menu
+import Code.Data as Data
 import sys
 
 if __name__ == "__main__":
     try:
         subcommand = sys.argv[1]
-        if not subcommand == "":
+        subcommand2 = sys.argv[2]
+        if subcommand == "-m":
+            if subcommand2 == "uninstall":
+                Menu.Uninstall()
+            else:
+                print(Data.Usage)
+        elif not subcommand == "":
             run.run(subcommand)
     except IndexError:
         run.run("")
