@@ -1,6 +1,8 @@
 import Code.Data as Data
 import os
 import shutil
+import re
+from pathlib import Path
 from shutil import which
 
 def Uninstall():
@@ -30,6 +32,7 @@ def Uninstall():
         exit(1)
 
 def apkmitm():
+    os.chdir(Data.Path_Patch)
     if not (which("java")):
         print(Data.Progress_Info + "Installing Java Program")
         os.system("apt install openjdk-17")
@@ -52,8 +55,9 @@ def apkmitm():
         Data.Download_Files(Data.Link_APKTOOL, Data.Path_APKTOOL)
     Apk_to_Patch = input(Data.Ask_Info + "Path Genshin.apk : ")
     if not (os.path.exists(Apk_to_Patch)):
-        print(f"{Data.Error_Info} not found!... Exit with code 1")
+        print(Data.Error_Info + Apk_to_Patch + " not found!...\nExit with code 1")
         exit(1)
+    os.chdir(Path.home())
     print(Data.Progress_Info + f"Patching {os.path.basename(Apk_to_Patch)}")
     try:
         os.system(f"apk-mitm --apktool {Data.Path_APKTOOL} {Apk_to_Patch}")
@@ -62,4 +66,18 @@ def apkmitm():
         exit(1)
     except Exception as e:
         print(Data.Error_Info + "Error while patching...", e)
+        exit(1)
+    print(Data.Progress_Info + "Trying move .apk/.apks to /sdcard")
+    Name_Patch = re.sub(r".apk$", "", os.path.basename(Apk_to_Patch))
+    File_Move = f"{Name_Patch}-patched.apk"
+    try:
+        shutil.move("./" + File_Move, f"/sdcard/{Name_Patch}-Z3RO.apk")
+    except FileNotFoundError:
+        print(Data.Error_Info + f"Error move {File_Move} to /sdcard because not exist\n\nExit with code 1")
+        exit(1)
+    if (os.path.exists(f"/sdcard/{Name_Patch}-Z3RO.apk")):
+        print(Data.Success_Info + f"Success move .apk to /sdcard with name {Name_Patch}-Z3RO.apk")
+        exit(0)
+    else:
+        print(Data.Error_Info + f"Failed move .apk to /sdcard with name {Name_Patch}-Z3RO.apk")
         exit(1)

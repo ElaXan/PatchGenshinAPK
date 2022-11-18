@@ -10,6 +10,7 @@ Error_Info = Color.RED + "E: " + Color.RESET
 Progress_Info = Color.GREEN + "I: " + Color.RESET
 Warning_Info = Color.YELLOW + "W: " + Color.RESET
 Ask_Info = Color.MAGENTA + "?: " + Color.RESET
+Success_Info = Color.GREEN + "✓: " + Color.RESET
 Get_Home = Path.home()
 Path_Patch = f"{Get_Home}/.ElaXan/Patch"
 Path_Module = f"{Path_Patch}/lspatch.jar"
