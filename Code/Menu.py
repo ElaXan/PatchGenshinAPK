@@ -54,7 +54,7 @@ def apkmitm():
     if not (os.path.exists(Apk_to_Patch)):
         print(f"{Data.Error_Info} not found!... Exit with code 1")
         exit(1)
-    print(Data.Progress_Info + f"Patching {Apk_to_Patch}")
+    print(Data.Progress_Info + f"Patching {os.path.basename(Apk_to_Patch)}")
     try:
         os.system(f"apk-mitm --apktool {Data.Path_APKTOOL} {Apk_to_Patch}")
     except KeyboardInterrupt:
