@@ -33,11 +33,11 @@ def apkmitm():
     if not (which("java")):
         print(Data.Progress_Info + "Installing Java Program")
         os.system("apt install openjdk-17")
-    if not (which("npm")):
-        print(Data.Error_Info + "Please install npm and node manually with newest version")
-        print(Data.Error_Info + "Exit with code 1")
-        exit(1)
     if not (which("apk-mitm")):
+        if not (which("npm")):
+            print(Data.Error_Info + "Please install npm and node manually with newest version")
+            print(Data.Error_Info + "Exit with code 1")
+            exit(1)
         print(Data.Progress_Info + "Installing apk-mitm Program with npm")
         os.system("npm install -g apk-mitm > /dev/null 2>&1")
     if not (os.path.exists(f"{Data.Path_Patch}")):
