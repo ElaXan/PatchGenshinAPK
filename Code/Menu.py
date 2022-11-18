@@ -45,7 +45,7 @@ def apkmitm():
         os.mkdir(Data.Path_Patch)
     if not (os.path.exists(f"{Data.Path_APKTOOL}")):
         print(Data.Progress_Info + "Downloading apktool.jar")
-        Data.Download_Files(Data.Link_APKTOOL, Data.Path_APKTOOL)
+        Data.Download_Files2(Data.Link_APKTOOL, Data.Path_APKTOOL)
     Apk_to_Patch = input(Data.Ask_Info + "Path Genshin.apk : ")
     if not (os.path.exists(Apk_to_Patch)):
         print(f"{Data.Error_Info} not found!... Exit with code 1")
