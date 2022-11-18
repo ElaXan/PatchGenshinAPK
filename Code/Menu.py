@@ -33,6 +33,10 @@ def apkmitm():
     if not (which("java")):
         print(Data.Progress_Info + "Installing Java Program")
         os.system("apt install openjdk-17")
+    if not (which("zipalign")):
+        print(Data.Error_Info + "zipalign not found...")
+        print(Data.Progress_Info + "Trying to install zipalign/aapt")
+        os.system("apt install aapt -y > /dev/null 2>&1")
     if not (which("npm")):
         print(Data.Error_Info + "Please install npm and node manually with newest version")
         print(Data.Error_Info + "Exit with code 1")
