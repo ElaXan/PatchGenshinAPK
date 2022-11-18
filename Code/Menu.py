@@ -45,6 +45,10 @@ def apkmitm():
         print(Data.Error_Info + "Exit with code 1")
         exit(1)
     if not (which("apk-mitm")):
+        if not (which("npm")):
+            print(Data.Error_Info + "Please install npm and node manually with newest version")
+            print(Data.Error_Info + "Exit with code 1")
+            exit(1)
         print(Data.Progress_Info + "Installing apk-mitm Program with npm")
         os.system("npm install -g apk-mitm > /dev/null 2>&1")
     if not (os.path.exists(f"{Data.Path_Patch}")):
@@ -52,7 +56,7 @@ def apkmitm():
         os.mkdir(Data.Path_Patch)
     if not (os.path.exists(f"{Data.Path_APKTOOL}")):
         print(Data.Progress_Info + "Downloading apktool.jar")
-        Data.Download_Files(Data.Link_APKTOOL, Data.Path_APKTOOL)
+        Data.Download_Files2(Data.Link_APKTOOL, Data.Path_APKTOOL)
     Apk_to_Patch = input(Data.Ask_Info + "Path Genshin.apk : ")
     if not (os.path.exists(Apk_to_Patch)):
         print(Data.Error_Info + Apk_to_Patch + " not found!...\nExit with code 1")
@@ -66,18 +70,4 @@ def apkmitm():
         exit(1)
     except Exception as e:
         print(Data.Error_Info + "Error while patching...", e)
-        exit(1)
-    print(Data.Progress_Info + "Trying move .apk/.apks to /sdcard")
-    Name_Patch = re.sub(r".apk$", "", os.path.basename(Apk_to_Patch))
-    File_Move = f"{Name_Patch}-patched.apk"
-    try:
-        shutil.move("./" + File_Move, f"/sdcard/{Name_Patch}-Z3RO.apk")
-    except FileNotFoundError:
-        print(Data.Error_Info + f"Error move {File_Move} to /sdcard because not exist\n\nExit with code 1")
-        exit(1)
-    if (os.path.exists(f"/sdcard/{Name_Patch}-Z3RO.apk")):
-        print(Data.Success_Info + f"Success move .apk to /sdcard with name {Name_Patch}-Z3RO.apk")
-        exit(0)
-    else:
-        print(Data.Error_Info + f"Failed move .apk to /sdcard with name {Name_Patch}-Z3RO.apk")
         exit(1)
