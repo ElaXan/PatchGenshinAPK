@@ -12,6 +12,8 @@ if __name__ == "__main__":
         if subcommand == "-m":
             if subcommand2 == "uninstall":
                 Menu.Uninstall()
+            elif subcommand2 == "apk-mitm":
+                Menu.apkmitm()
             else:
                 print(Data.Usage)
     except IndexError:

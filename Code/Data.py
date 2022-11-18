@@ -9,13 +9,16 @@ import requests
 Error_Info = Color.RED + "E: " + Color.RESET
 Progress_Info = Color.GREEN + "I: " + Color.RESET
 Warning_Info = Color.YELLOW + "W: " + Color.RESET
+Ask_Info = Color.MAGENTA + "?: " + Color.RESET
 Get_Home = Path.home()
 Path_Patch = f"{Get_Home}/.ElaXan/Patch"
 Path_Module = f"{Path_Patch}/lspatch.jar"
+Path_APKTOOL = f"{Path_Patch}/apktool.jar"
 Path_Module_LSPosed = f"{Path_Patch}/app-release.apk"
 Link_LSPatch = "https://github.com/LSPosed/LSPatch/releases/download/v0.5/lspatch.jar"
 Link_Module_LSPosed = "https://elaxan.com/download/Genshin-Android/app-release.apk"
-Usage = f"{Error_Info}Subcommand not entered!\nUsage :\n1. {os.path.basename(sys.argv[0])} -m uninstall\n2. TODO"
+Usage = f"{Error_Info}Subcommand not entered!\nUsage :\n1. {os.path.basename(sys.argv[0])} -m uninstall\n2. {os.path.basename(sys.argv[0])} -m apk-mitm"
+Link_APKTOOL = "https://elaxan.com/download/apktool/apktool.jar"
 
 def Download_Files(url: str, path: str):
     Download = requests.get(url, allow_redirects=True)
