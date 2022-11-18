@@ -2,6 +2,16 @@
 
 Tool for patching .apk on Android Phone using Termux.
 
+## Note
+
+For now you can only patch using the .apk extension, so please don't patch using the .apks, .xapk extension or something else
+
+## Requirements
+
+* Python
+* Java
+* Termux
+
 ## Features available for now
 
 ### LSPatch
@@ -20,13 +30,7 @@ And for my project [AnimeGamePatch](https://github.com/Score-Inc/AnimeGamePatch)
 1. > `patchgenshin` : Patching APK with LSPatch
 2. > `patchgenshin <Path_To_APK.apk>` : shortcut for Patching with LSPatch
 3. > `patchgenshin -m apk-mitm` : Patching apk with apk-mitm to support with Mitmproxy/Mitmdump
-4. > `patchgenshin -m uninstall` : Uninstall PatchGenshinAPK\
-
-## Requirements
-
-* Python
-* Java
-* Termux
+4. > `patchgenshin -m uninstall` : Uninstall PatchGenshinAPK
 
 # Install
 
