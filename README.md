@@ -6,13 +6,6 @@ Tool for patching .apk on Android Phone using Termux.
 
 ### LSPatch
 
-
-Tool for patching .apk on Android Phone using Termux.
-
-## Features available for now
-
-### LSPatch
-
 [LSPatch](https://github.com/LSPosed/LSPatch)\
 Patching APK and embed module for no root user can use a LSPosed Module.
 
