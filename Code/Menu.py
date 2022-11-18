@@ -33,29 +33,14 @@ def Uninstall():
 
 def apkmitm():
     os.chdir(Path.home())
-    if not (which("java")):
-        print(Data.Progress_Info + "Installing Java Program")
-        os.system("apt install openjdk-17")
-    if not (which("zipalign")):
-        print(Data.Error_Info + "zipalign not found...")
-        print(Data.Progress_Info + "Trying to install zipalign/aapt")
-        os.system("apt install aapt -y > /dev/null 2>&1")
-    if not (which("apk-mitm")):
-        if not (which("npm")):
-            print(Data.Error_Info + "Please install npm and node manually with newest version")
-            print(Data.Error_Info + "Exit with code 1")
-            exit(1)
-        print(Data.Progress_Info + "Installing apk-mitm Program with npm")
-        os.system("npm install -g apk-mitm > /dev/null 2>&1")
-    if not (os.path.exists(f"{Data.Path_Patch}")):
-        print(Data.Progress_Info + f"Creating folder {Data.Path_Patch}")
-        os.mkdir(Data.Path_Patch)
-    if not (os.path.exists(f"{Data.Path_APKTOOL}")):
-        print(Data.Progress_Info + "Downloading apktool.jar")
-        Data.Download_Files2(Data.Link_APKTOOL, Data.Path_APKTOOL)
+    Data.Check_Files_Patch()
     Apk_to_Patch = input(Data.Ask_Info + "Path Genshin.apk : ")
     if not (os.path.exists(Apk_to_Patch)):
         print(Data.Error_Info + Apk_to_Patch + " not found!...\nExit with code 1")
+        exit(1)
+    # if not file is apk
+    if not (Apk_to_Patch.endswith(".apk")):
+        print(Data.Error_Info + Apk_to_Patch + " is not apk file!...\nExit with code 1")
         exit(1)
     os.chdir(Path.home())
     print(Data.Progress_Info + f"Patching {os.path.basename(Apk_to_Patch)}")

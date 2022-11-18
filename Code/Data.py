@@ -34,3 +34,55 @@ def Download_Files2(url: str, path: str):
         os.system("apt install wget -y &> /dev/null")
     os.system("wget " + url + " -O " + path + " > /dev/null 2>&1")
     sleep(1)
+
+def Move_Files(path: str, path2: str):
+    os.system("mv " + path + " " + path2 + " > /dev/null 2>&1")
+    sleep(1)
+
+def Change_Permission(path: str):
+    os.system("chmod 777 " + path + " > /dev/null 2>&1")
+    sleep(1)
+
+def Check_Files(path: str):
+    if not os.path.exists(path):
+        return False
+    else:
+        return True
+
+def Download_LSPatch():
+    if not Check_Files(Path_Module):
+        print(Progress_Info + "Downloading LSPatch")
+        Download_Files(Link_LSPatch, Path_Module)
+        Change_Permission(Path_Module)
+        print(Success_Info + "Downloaded LSPatch")
+    else:
+        print(Progress_Info + "LSPatch already downloaded")
+
+def Download_APKTOOL():
+    if not Check_Files(Path_APKTOOL):
+        print(Progress_Info + "Downloading APKTOOL")
+        Download_Files(Link_APKTOOL, Path_APKTOOL)
+        Change_Permission(Path_APKTOOL)
+        print(Success_Info + "Downloaded APKTOOL")
+    else:
+        print(Progress_Info + "APKTOOL already downloaded")
+
+def Download_Module_LSPosed():
+    if not Check_Files(Path_Module_LSPosed):
+        print(Progress_Info + "Downloading LSPosed Module")
+        Download_Files(Link_Module_LSPosed, Path_Module_LSPosed)
+        print(Success_Info + "Downloaded LSPosed Module")
+    else:
+        print(Progress_Info + "LSPosed Module already downloaded")
+
+def Check_Files_Patch():
+    if not Check_Files(Path_Patch):
+        os.system("mkdir " + Path_Patch + " > /dev/null 2>&1")
+        sleep(1)
+        Download_LSPatch()
+        Download_APKTOOL()
+        Download_Module_LSPosed()
+    else:
+        Download_LSPatch()
+        Download_APKTOOL()
+        Download_Module_LSPosed()
