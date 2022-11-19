@@ -11,6 +11,7 @@ Progress_Info = Color.GREEN + "I: " + Color.RESET
 Warning_Info = Color.YELLOW + "W: " + Color.RESET
 Ask_Info = Color.MAGENTA + "?: " + Color.RESET
 Success_Info = Color.GREEN + "✓: " + Color.RESET
+Cancel_Info = Color.YELLOW + "X: " + Color.RESET
 Get_Home = Path.home()
 Path_Patch = f"{Get_Home}/.ElaXan/Patch"
 Path_Module = f"{Path_Patch}/lspatch.jar"
@@ -75,14 +76,43 @@ def Download_Module_LSPosed():
     else:
         print(Progress_Info + "LSPosed Module already downloaded")
 
-def Check_Files_Patch():
+def Install_apkmitm():
+    # check if command apk-mitm is not installed
+    if not (which("apk-mitm")):
+        print(Progress_Info + "Installing apk-mitm")
+        os.system("pip install apk-mitm > /dev/null 2>&1")
+        print(Success_Info + "Installed apk-mitm")
+    else:
+        print(Progress_Info + "apk-mitm already installed")
+
+def Check_Requirements_apkmitm():
+    # if Path_Patch not exist
     if not Check_Files(Path_Patch):
+        # create Path_Patch folder
         os.system("mkdir " + Path_Patch + " > /dev/null 2>&1")
         sleep(1)
-        Download_LSPatch()
+        # download APKTOOL
         Download_APKTOOL()
+        # install apk-mitm
+        Install_apkmitm()
+    else:
+        # download APKTOOL
+        Download_APKTOOL()
+        # install apk-mitm
+        Install_apkmitm()
+
+def Check_Requirements_LSPatch():
+    # if Path_Patch not exist
+    if not Check_Files(Path_Patch):
+        # create Path_Patch folder
+        os.system("mkdir " + Path_Patch + " > /dev/null 2>&1")
+        sleep(1)
+        # download LSPatch
+        Download_LSPatch()
+        # download Module LSPosed
         Download_Module_LSPosed()
     else:
+        # download LSPatch
         Download_LSPatch()
-        Download_APKTOOL()
+        # download Module LSPosed
         Download_Module_LSPosed()

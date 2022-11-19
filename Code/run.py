@@ -7,10 +7,7 @@ from time import sleep
 from pathlib import Path
 
 def run(file_apk_to_patch: str):
-    # Check if java is installed
-    if not (which("java")):
-        print(Data.Progress_Info + "Installing Java")
-        os.system("apt install openjdk-17 -y")
+    Data.Check_Requirements_LSPatch()
     if (file_apk_to_patch == ""):
         try:
             user_input = input("Enter file Genshin.apk : ")
@@ -25,16 +22,18 @@ def run(file_apk_to_patch: str):
             exit(1)
     else:
         user_input = file_apk_to_patch
+    # If user_input is not file .apk
+    if not (user_input.endswith(".apk")):
+        print(Data.Error_Info + "File is not .apk")
+        exit(1)
+    # If user_input file not found
     if not (os.path.exists(user_input)):
-        # If file not found, this message will be appears
-        print(Data.Error_Info + "File for " + user_input + " Not exist")
+        print(Data.Error_Info + "File not found!")
         exit(1)
-    # If Folder not found, will be create immediately
-    if not user_input.endswith(".apk"):
-        print(Data.Error_Info + f"File for {user_input} is not .apk")
-        exit(1)
-    if not (os.path.exists(f"{Path.home()}/.ElaXan")):
-        os.mkdir(f"{Path.home()}/.ElaXan")
+    # If Folder Path.home() + "/.ElaXan" not found, will be create immediately
+    if not (os.path.exists(Path.home() + "/.ElaXan")):
+        os.mkdir(Path.home() + "/.ElaXan")
+    
     if not (os.path.exists(Data.Path_Patch)):
         os.mkdir(Data.Path_Patch)
     print(Data.Progress_Info + "Copying files from " + user_input + " to " + Data.Path_Patch)

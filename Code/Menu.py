@@ -33,8 +33,13 @@ def Uninstall():
 
 def apkmitm():
     os.chdir(Path.home())
-    Data.Check_Files_Patch()
-    Apk_to_Patch = input(Data.Ask_Info + "Path Genshin.apk : ")
+    Data.Check_Requirements_apkmitm()
+    # if KeyboardInterrupt then print Canceled by User
+    try:
+        Apk_to_Patch = input(Data.Ask_Info + "Path Genshin.apk : ")
+    except KeyboardInterrupt:
+        print(Data.Cancel_Info + "Canceled by User")
+        exit(1)
     if not (os.path.exists(Apk_to_Patch)):
         print(Data.Error_Info + Apk_to_Patch + " not found!...\nExit with code 1")
         exit(1)
