@@ -6,13 +6,13 @@ from pathlib import Path
 from time import sleep
 import requests
 
+Version = "1.0.0"
 Error_Info = Color.RED + "E: " + Color.RESET
 Progress_Info = Color.GREEN + "I: " + Color.RESET
 Warning_Info = Color.YELLOW + "W: " + Color.RESET
 Ask_Info = Color.MAGENTA + "?: " + Color.RESET
 Success_Info = Color.GREEN + "✓: " + Color.RESET
 Cancel_Info = Color.YELLOW + "X: " + Color.RESET
-Info_Info = Color.CYAN + "I: " + Color.RESET
 Get_Home = Path.home()
 Path_Patch = f"{Get_Home}/.ElaXan/Patch"
 Path_Module = f"{Path_Patch}/lspatch.jar"
@@ -24,14 +24,13 @@ Usage = f"{Error_Info}Subcommand not entered!\nUsage :\n1. {os.path.basename(sys
 Link_APKTOOL = "https://elaxan.com/download/apktool/apktool.jar"
 
 def Help():
-    print(Error_Info + "Wrong input!")
-    print(Info_Info + "Usage: patchgenshin [option] [file]")
-    print(Info_Info + "Options:")
-    print(Info_Info + "  -h, --help\t\tShow this help message and exit")
-    print(Info_Info + "  -u, --uninstall\tUninstall PatchGenshinAPK")
-    print(Info_Info + "  -v, --version\t\tShow version")
-    print(Info_Info + "  -p, --patch\t\tPatch Genshin.apk with LSPatch")
-    print(Info_Info + "  -a, --apk-mitm\tPatch Genshin.apk with apk-mitm")
+    print("Usage: patchgenshin [option] [file]")
+    print("Options:")
+    print("  -h, --help\t\tShow this help message and exit")
+    print("  -u, --uninstall\tUninstall PatchGenshinAPK")
+    print("  -v, --version\t\tShow version")
+    print("  -l, --lspatch\t\tPatch Genshin.apk with LSPatch")
+    print("  -a, --apkmitm\t\tPatch Genshin.apk with apk-mitm")
     exit(1)
 
 def Download_Files(url: str, path: str):

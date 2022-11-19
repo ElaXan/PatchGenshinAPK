@@ -14,14 +14,18 @@ if __name__ == "__main__":
         elif sys.argv[1] == "--help":
             Data.Help()
         elif sys.argv[1] == "--version":
-            Data.Version()
+            print("Version : " + Data.Version)
         elif sys.argv[1] == "--update":
-            run.Update()
-        elif sys.argv[1] == "--apkmitm":
-            Menu.apkmitm("")
-        elif sys.argv[1] == "--lspatch":
-            run.run("")
+            print("Still development")
+            exit(0)
+        elif sys.argv[1] == "--apkmitm" or sys.argv[1] == "-a":
+            print(Data.Error_Info + "Please enter file name")
+            exit(1)
+        elif sys.argv[1] == "--lspatch" or sys.argv[1] == "-l":
+            print(Data.Error_Info + "Please enter file name")
+            exit(1)
         else:
+            print(Data.Error_Info + "Wrong input!")
             Data.Help()
     elif len(sys.argv) == 3:
         if sys.argv[1] == "--apkmitm" or sys.argv[1] == "-a":
@@ -29,6 +33,8 @@ if __name__ == "__main__":
         elif sys.argv[1] == "--lspatch" or sys.argv[1] == "-l":
             run.run(sys.argv[2])
         else:
+            print(Data.Error_Info + "Wrong input!")
             Data.Help()
     else:
+        print(Data.Error_Info + "Wrong input!")
         Data.Help()
