@@ -72,6 +72,8 @@ def run(file_apk_to_patch: str):
         Name_Patch = re.sub(r".apk$", "", Getting_FileName)
         File_Move = f"/sdcard/{Name_Patch}-ElaXan.apk"
         shutil.move(Name_Patch + "-348-lspatched.apk", File_Move)
+        # Remove file from Getting_FileName
+        os.remove(Getting_FileName)
         if not (os.path.exists(File_Move)):
             print(f"Failed to move {Name_Patch} to /sdcard")
             if (os.path.exists(f"{Name_Patch}-ElaXan.apk")):
