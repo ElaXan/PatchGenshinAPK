@@ -76,7 +76,7 @@ def Download_APKTOOL():
 def Download_Module_LSPosed():
     if not Check_Files(Path_Module_LSPosed):
         print(Progress_Info + "Downloading LSPosed Module")
-        Download_Files(Link_Module_LSPosed, Path_Module_LSPosed)
+        Download_Files2(Link_Module_LSPosed, Path_Module_LSPosed)
         print(Success_Info + "Downloaded LSPosed Module")
     else:
         print(Progress_Info + "LSPosed Module already downloaded")

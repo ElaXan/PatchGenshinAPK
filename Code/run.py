@@ -7,7 +7,7 @@ from time import sleep
 from pathlib import Path
 
 def run(file_apk_to_patch: str):
-    # if java not found, then install with function Install_Program
+    os.chdir(Data.Path_Patch)
     if not (which("java")):
         Data.Install_Program("openjdk-17")
     Data.Check_Requirements_LSPatch()
@@ -34,7 +34,7 @@ def run(file_apk_to_patch: str):
         print(Data.Error_Info + "File not found!")
         exit(1)
     # If Folder Path.home() + "/.ElaXan" not found, will be create immediately
-    if not (os.path.exists(Path.home() + "/.ElaXan")):
+    if not (os.path.exists(f"{Path.home()}/.ElaXan")):
         os.mkdir(Path.home() + "/.ElaXan")
     
     if not (os.path.exists(Data.Path_Patch)):
