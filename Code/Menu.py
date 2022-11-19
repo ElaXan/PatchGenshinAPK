@@ -4,7 +4,6 @@ import shutil
 from time import sleep
 import re
 from pathlib import Path
-from shutil import which
 
 def Uninstall():
     asking_to_uninstall = input("Are you sure want to uninstall? [y/N] : ")
