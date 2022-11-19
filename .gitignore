@@ -3,3 +3,6 @@ import.sh
 
 # VSCode Settings
 .vscode
+
+# Python Cache
+__pycache__

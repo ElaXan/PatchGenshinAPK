@@ -3,21 +3,29 @@
 import Code.run as run
 import Code.Menu as Menu
 import Code.Data as Data
+from pathlib import Path
+import os
 import sys
 
 if __name__ == "__main__":
+    if not (os.path.exists(f"{Path.home()}/.ElaXan")):
+        os.mkdir(f"{Path.home()}/.ElaXan")
+    if not (os.path.exists(f"{Path.home()}/.ElaXan/Patch")):
+        os.mkdir(f"{Path.home()}/.ElaXan/Patch")
+    if os.geteuid() == 0:
+        print(Data.Error_Info + "Please run this script as normal user")
+        exit(1)
     if len(sys.argv) == 1:
         Data.Help()
     elif len(sys.argv) == 2:
-        if sys.argv[1] == "--uninstall":
+        if sys.argv[1] == "--uninstall" or sys.argv[1] == "-u":
             Menu.Uninstall()
-        elif sys.argv[1] == "--help":
+        elif sys.argv[1] == "--help" or sys.argv[1] == "-h":
             Data.Help()
-        elif sys.argv[1] == "--version":
+        elif sys.argv[1] == "--version" or sys.argv[1] == "-v":
             print("Version : " + Data.Version)
-        elif sys.argv[1] == "--update":
-            print("Still development")
-            exit(0)
+        elif sys.argv[1] == "--update" or sys.argv[1] == "-up":
+            Menu.Update()
         elif sys.argv[1] == "--apkmitm" or sys.argv[1] == "-a":
             print(Data.Error_Info + "Please enter file name")
             exit(1)

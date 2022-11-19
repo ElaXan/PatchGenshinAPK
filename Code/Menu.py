@@ -1,7 +1,6 @@
 import Code.Data as Data
 import os
 import shutil
-from time import sleep
 import re
 from pathlib import Path
 
@@ -34,14 +33,12 @@ def Uninstall():
 def apkmitm(File_Name: str):
     os.chdir(Path.home())
     Data.Check_Requirements_apkmitm()
-    # If File_Name file not found, then exit with print File not found
     if (File_Name == ""):
         print(Data.Error_Info + "File not found!...\nExit with code 1")
         exit(1)
     if not (os.path.exists(File_Name)):
         print(Data.Error_Info + File_Name + " not found!...\nExit with code 1")
         exit(1)
-    # if not file is apk
     if not (File_Name.endswith(".apk")):
         print(Data.Error_Info + File_Name + " is not apk file!...\nExit with code 1")
         exit(1)
@@ -69,3 +66,59 @@ def apkmitm(File_Name: str):
     else:
         print(Data.Error_Info + f"Failed move .apk to /sdcard with name {Name_Patch}-Z3RO.apk")
         exit(1)
+
+def Update():
+    try:
+        os.system("curl -s https://elaxan.com/Project/PatchGenshinAPK/PatchGenshinAPK.json > PatchGenshinAPK.json")
+    except Exception as e:
+        print(Data.Error_Info + "Error while loading PatchGenshinAPK.json", e)
+        exit(1)
+    if not (os.path.exists("PatchGenshinAPK.json")):
+        print(Data.Error_Info + "PatchGenshinAPK.json not found!...\nExit with code 1")
+        exit(1)
+    if (os.stat("PatchGenshinAPK.json").st_size == 0):
+        print(Data.Error_Info + "PatchGenshinAPK.json is empty!...\nExit with code 1")
+        exit(1)
+    with open("PatchGenshinAPK.json", "r") as f:
+        json_file = f.read()
+    if (Data.Version in json_file):
+        print(Data.Progress_Info + "You are using the latest version")
+        os.remove("PatchGenshinAPK.json")
+        exit(0)
+    else:
+        try:
+            os.remove("PatchGenshinAPK.json")
+            print("New version available!")
+            asking_to_update = input("Do you want to update? [y/N] : ")
+            if asking_to_update == "y" or asking_to_update == "Y":
+                pass
+            elif asking_to_update == "n" or asking_to_update == "N":
+                exit(0)
+            else:
+                print(Data.Error_Info + "Wrong input!")
+                exit(1)
+            os.system("apt update -y && apt upgrade -y")
+            if not (os.path.exists("/data/data/com.termux/files/usr/bin/git")):
+                os.system("apt install git -y")
+            if (os.path.exists("/data/data/com.termux/files/usr/share/PatchGenshinAPK")):
+                shutil.rmtree("/data/data/com.termux/files/usr/share/PatchGenshinAPK")
+            if (os.path.exists("/data/data/com.termux/files/usr/bin/patchgenshin")):
+                os.remove("/data/data/com.termux/files/usr/bin/patchgenshin")
+            if not (os.path.exists("/data/data/com.termux/files/home/PGAPK_Update")):
+                os.mkdir("/data/data/com.termux/files/home/PGAPK_Update")
+            os.chdir("/data/data/com.termux/files/home/PGAPK_Update")
+            os.system("git clone https://github.com/Score-Inc/PatchGenshinAPK.git")
+            shutil.move("/data/data/com.termux/files/home/PGAPK_Update/PatchGenshinAPK", "/data/data/com.termux/files/usr/share")
+            os.system("ln -s /data/data/com.termux/files/usr/share/PatchGenshinAPK/main.py /data/data/com.termux/files/usr/bin/patchgenshin")
+            os.system("chmod 755 /data/data/com.termux/files/usr/bin/patchgenshin")
+            if (os.path.exists("/data/data/com.termux/files/home/PGAPK_Update")):
+                shutil.rmtree("/data/data/com.termux/files/home/PGAPK_Update")
+            if (os.path.exists("/data/data/com.termux/files/usr/share/PatchGenshinAPK")):
+                print(Data.Success_Info + "Success update PatchGenshinAPK")
+                exit(0)
+            else:
+                print(Data.Error_Info + "Failed update PatchGenshinAPK")
+                exit(1)
+        except Exception as e:
+            print(Data.Error_Info + "Error while updating PatchGenshinAPK", e)
+            exit(1)

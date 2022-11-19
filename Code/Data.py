@@ -6,20 +6,23 @@ from pathlib import Path
 from time import sleep
 import requests
 
-Version = "1.0.0"
+Version = "1.0.1"
 Error_Info = Color.RED + "E: " + Color.RESET
 Progress_Info = Color.GREEN + "I: " + Color.RESET
 Warning_Info = Color.YELLOW + "W: " + Color.RESET
 Ask_Info = Color.MAGENTA + "?: " + Color.RESET
 Success_Info = Color.GREEN + "✓: " + Color.RESET
 Cancel_Info = Color.YELLOW + "X: " + Color.RESET
+json_link = "https://elaxan.com/Project/PatchGenshinAPK/PatchGenshinAPK.json"
 Get_Home = Path.home()
 Path_Patch = f"{Get_Home}/.ElaXan/Patch"
 Path_Module = f"{Path_Patch}/lspatch.jar"
 Path_APKTOOL = f"{Path_Patch}/apktool.jar"
 Path_Module_LSPosed = f"{Path_Patch}/yuuki.yuukips.apk"
+Path_Module_LSPosed_Chinese = f"{Path_Patch}/xfk233.genshinproxy.apk"
 Link_LSPatch = "https://github.com/LSPosed/LSPatch/releases/download/v0.5/lspatch.jar"
 Link_Module_LSPosed = "https://elaxan.com/download/Genshin-Android/yuuki.yuukips.apk"
+Link_Module_LSPosed_Chinese = "https://elaxan.com/download/Genshin-Android/xfk233.genshinproxy.apk"
 Usage = f"{Error_Info}Subcommand not entered!\nUsage :\n1. {os.path.basename(sys.argv[0])} -m uninstall\n2. {os.path.basename(sys.argv[0])} -m apk-mitm"
 Link_APKTOOL = "https://elaxan.com/download/apktool/apktool.jar"
 
@@ -40,7 +43,6 @@ def Download_Files(url: str, path: str):
         Downloading.close()
 
 def Download_Files2(url: str, path: str):
-    # Check if command wget is not installed
     if not (which("wget")):
         print(Progress_Info + "Installing wget command")
         os.system("apt install wget -y &> /dev/null")
@@ -60,6 +62,10 @@ def Check_Files(path: str):
         return False
     else:
         return True
+
+def get_Text_From_Server():
+    text = requests.get("https://elaxan.com/download/Genshin-Android/Text.txt").text
+    return text
 
 def Install_Program(program_name: str):
     print(Progress_Info + "Installing " + program_name)
@@ -86,14 +92,21 @@ def Download_APKTOOL():
 
 def Download_Module_LSPosed():
     if not Check_Files(Path_Module_LSPosed):
-        print(Progress_Info + "Downloading LSPosed Module")
+        print(Progress_Info + "Downloading LSPosed Module [Yuuki]")
         Download_Files2(Link_Module_LSPosed, Path_Module_LSPosed)
-        print(Success_Info + "Downloaded LSPosed Module")
+        print(Success_Info + "Downloaded LSPosed Module [Yuuki]")
     else:
-        print(Progress_Info + "LSPosed Module already downloaded")
+        print(Progress_Info + "LSPosed Module already downloaded [Yuuki]")
+
+def Download_Chinese_Module():
+    if not Check_Files(Path_Module_LSPosed_Chinese):
+        print(Progress_Info + "Downloading LSPosed Module [Chinese]")
+        Download_Files2(Link_Module_LSPosed_Chinese, Path_Module_LSPosed_Chinese)
+        print(Success_Info + "Downloaded LSPosed Module [Chinese]")
+    else:
+        print(Progress_Info + "LSPosed Module already downloaded [Chinese]")
 
 def Install_apkmitm():
-    # check if command apk-mitm is not installed
     if not (which("apk-mitm")):
         print(Progress_Info + "Installing apk-mitm")
         os.system("pip install apk-mitm > /dev/null 2>&1")
@@ -102,33 +115,23 @@ def Install_apkmitm():
         print(Progress_Info + "apk-mitm already installed")
 
 def Check_Requirements_apkmitm():
-    # if Path_Patch not exist
     if not Check_Files(Path_Patch):
-        # create Path_Patch folder
         os.system("mkdir " + Path_Patch + " > /dev/null 2>&1")
         sleep(1)
-        # download APKTOOL
         Download_APKTOOL()
-        # install apk-mitm
         Install_apkmitm()
     else:
-        # download APKTOOL
         Download_APKTOOL()
-        # install apk-mitm
         Install_apkmitm()
 
 def Check_Requirements_LSPatch():
-    # if Path_Patch not exist
     if not Check_Files(Path_Patch):
-        # create Path_Patch folder
         os.system("mkdir " + Path_Patch + " > /dev/null 2>&1")
         sleep(1)
-        # download LSPatch
         Download_LSPatch()
-        # download Module LSPosed
         Download_Module_LSPosed()
+        Download_Chinese_Module()
     else:
-        # download LSPatch
         Download_LSPatch()
-        # download Module LSPosed
         Download_Module_LSPosed()
+        Download_Chinese_Module()
