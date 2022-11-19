@@ -50,6 +50,11 @@ def Check_Files(path: str):
     else:
         return True
 
+def Install_Program(program_name: str):
+    print(Progress_Info + "Installing " + program_name)
+    os.system("apt install " + program_name + " -y > /dev/null 2>&1")
+    print(Success_Info + "Installed " + program_name)
+
 def Download_LSPatch():
     if not Check_Files(Path_Module):
         print(Progress_Info + "Downloading LSPatch")
