@@ -7,6 +7,9 @@ from time import sleep
 from pathlib import Path
 
 def run(file_apk_to_patch: str):
+    # if java not found, then install with function Install_Program
+    if not (which("java")):
+        Data.Install_Program("default-jdk")
     Data.Check_Requirements_LSPatch()
     if (file_apk_to_patch == ""):
         try:
