@@ -1,6 +1,7 @@
 import Code.Data as Data
 import os
 import shutil
+from time import sleep
 import re
 from pathlib import Path
 from shutil import which
@@ -31,12 +32,22 @@ def Uninstall():
         print(Data.Error_Info + "Failed to uninstall PatchGenshinAPK")
         exit(1)
 
-def apkmitm():
+def apkmitm(File_Name: str):
     os.chdir(Path.home())
     Data.Check_Requirements_apkmitm()
     # if KeyboardInterrupt then print Canceled by User
     try:
-        Apk_to_Patch = input(Data.Ask_Info + "Path Genshin.apk : ")
+        # If File_Name is null, then ask user to input file name Apk_to_patch
+        if (File_Name == ""):
+            Apk_to_Patch = input("Enter file Genshin.apk : ")
+            if (Apk_to_Patch == ""):
+                while (Apk_to_Patch == ""):
+                    # If user not entered path to Genshin.apk
+                    print(Data.Error_Info + "Please enter path!")
+                    sleep(1)
+                    Apk_to_Patch = input("Enter file Genshin.apk : ")
+        else:
+            Apk_to_Patch = File_Name
     except KeyboardInterrupt:
         print(Data.Cancel_Info + "Canceled by User")
         exit(1)

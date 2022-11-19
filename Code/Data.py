@@ -12,6 +12,7 @@ Warning_Info = Color.YELLOW + "W: " + Color.RESET
 Ask_Info = Color.MAGENTA + "?: " + Color.RESET
 Success_Info = Color.GREEN + "✓: " + Color.RESET
 Cancel_Info = Color.YELLOW + "X: " + Color.RESET
+Info_Info = Color.CYAN + "I: " + Color.RESET
 Get_Home = Path.home()
 Path_Patch = f"{Get_Home}/.ElaXan/Patch"
 Path_Module = f"{Path_Patch}/lspatch.jar"
@@ -21,6 +22,17 @@ Link_LSPatch = "https://github.com/LSPosed/LSPatch/releases/download/v0.5/lspatc
 Link_Module_LSPosed = "https://elaxan.com/download/Genshin-Android/yuuki.yuukips.apk"
 Usage = f"{Error_Info}Subcommand not entered!\nUsage :\n1. {os.path.basename(sys.argv[0])} -m uninstall\n2. {os.path.basename(sys.argv[0])} -m apk-mitm"
 Link_APKTOOL = "https://elaxan.com/download/apktool/apktool.jar"
+
+def Help():
+    print(Error_Info + "Wrong input!")
+    print(Info_Info + "Usage: patchgenshin [option] [file]")
+    print(Info_Info + "Options:")
+    print(Info_Info + "  -h, --help\t\tShow this help message and exit")
+    print(Info_Info + "  -u, --uninstall\tUninstall PatchGenshinAPK")
+    print(Info_Info + "  -v, --version\t\tShow version")
+    print(Info_Info + "  -p, --patch\t\tPatch Genshin.apk with LSPatch")
+    print(Info_Info + "  -a, --apk-mitm\tPatch Genshin.apk with apk-mitm")
+    exit(1)
 
 def Download_Files(url: str, path: str):
     Download = requests.get(url, allow_redirects=True)
