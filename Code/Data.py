@@ -1,12 +1,11 @@
 import os
-import sys
 from shutil import which
 from colorama import Fore as Color
 from pathlib import Path
 from time import sleep
 import requests
 
-Version = "1.0.1"
+Version = "1.0.2"
 Error_Info = Color.RED + "E: " + Color.RESET
 Progress_Info = Color.GREEN + "I: " + Color.RESET
 Warning_Info = Color.YELLOW + "W: " + Color.RESET

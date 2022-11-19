@@ -25,6 +25,12 @@ Patching APK and embed module for no root user can use a LSPosed Module.
 Patch AnimeGame uses apk-mitm to be able to use mitmproxy/mitmdump.\
 And for my project [AnimeGamePatch](https://github.com/Score-Inc/AnimeGamePatch)
 
+### Clone
+
+Clone AnimeGane APK\
+With custom name Package by yourself\
+See [Clone APK](#clone-apk) for how to use it
+
 # Commands
 
 ```sh
