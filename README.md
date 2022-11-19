@@ -12,7 +12,7 @@ For now you can only patch using the .apk extension, so please don't patch using
 * Java
 * Termux
 
-## Features available for now
+## Features available
 
 ### LSPatch
 
@@ -27,10 +27,16 @@ And for my project [AnimeGamePatch](https://github.com/Score-Inc/AnimeGamePatch)
 
 # Commands
 
-1. > `patchgenshin` : Patching APK with LSPatch
-2. > `patchgenshin <Path_To_APK.apk>` : shortcut for Patching with LSPatch
-3. > `patchgenshin -m apk-mitm` : Patching apk with apk-mitm to support with Mitmproxy/Mitmdump
-4. > `patchgenshin -m uninstall` : Uninstall PatchGenshinAPK
+```sh
+~$ patchgenshin --help
+Usage: patchgenshin [option] [file]
+Options:
+  -h, --help            Show this help message and exit
+  -u, --uninstall       Uninstall PatchGenshinAPK
+  -v, --version         Show version
+  -l, --lspatch         Patch Genshin.apk with LSPatch
+  -a, --apkmitm         Patch Genshin.apk with apk-mitm
+```
 
 # Install
 
@@ -41,5 +47,36 @@ bash <(curl -Ls https://raw.githubusercontent.com/Score-Inc/PatchGenshinAPK/main
 
 # How to use
 
-Sadly there is no tutorial how to use this for now.\
-You should know what are you doing
+Make sure you already have AnimeGame.apk for Patch
+
+## Patching with LSPatch
+
+Commands:
+```sh
+~$ patchgenshin -l <path to APK>
+```
+
+Example:
+```sh
+~$ patchgenshin -l /sdcard/animegame.apk
+```
+
+> Then it will patch for animegame.apk.
+
+> If patch success will save to /sdcard with file name animegame-ElaXan.apk
+
+## Patching with apk-mitm
+
+Commands:
+```sh
+~$ patchgenshin -a <path to APK>
+```
+
+Example:
+```sh
+~$ patchgenshin -a /sdcard/animegame.apk
+```
+
+> Then it will.patch for animegame.apk
+
+> If patch success will save to /sdcard with file bame animegame-Z3RO.apk
