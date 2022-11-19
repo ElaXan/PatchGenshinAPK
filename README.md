@@ -128,4 +128,4 @@ Example:
 
 > Then it will clone package name with custom apk name for animegame.apk
 
-> If clone success will save to /sdcard with file name Clone apk by Z3RO.apk
+> If clone success will save to /sdcard with file name animegame-clone-Z3RO.apk
