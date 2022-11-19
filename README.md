@@ -29,13 +29,22 @@ And for my project [AnimeGamePatch](https://github.com/Score-Inc/AnimeGamePatch)
 
 ```sh
 ~$ patchgenshin --help
-Usage: patchgenshin [option] [file]
+Usage: patchgenshin [option] [file] [package_name]
 Options:
   -h, --help            Show this help message and exit
   -u, --uninstall       Uninstall PatchGenshinAPK
   -v, --version         Show version
   -l, --lspatch         Patch Genshin.apk with LSPatch
   -a, --apkmitm         Patch Genshin.apk with apk-mitm
+  -c, --clone           Clone Genshin package name
+
+file:
+Path to APK want to Patch : /sdcard/Genshin.apk
+
+package_name:
+Only for use -c or --clone feature
+Enter custom package name : com.elaxan.z3ro
+
 ```
 
 # Install
@@ -80,3 +89,19 @@ Example:
 > Then it will.patch for animegame.apk
 
 > If patch success will save to /sdcard with file bame animegame-Z3RO.apk
+
+## Clone APK
+
+Commands:
+```sh
+~$ patchgenshin -c <path to APK> <package name>
+```
+
+Example:
+```sh
+~$ patchgenshin -c /sdcard/animegame.apk com.elaxan.z3ro
+```
+
+> Then it will clone package name for animegame.apk
+
+> If clone success will save to /sdcard with file name animegame-clone-Z3RO.apk

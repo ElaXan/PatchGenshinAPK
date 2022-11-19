@@ -20,21 +20,31 @@ Path_Module = f"{Path_Patch}/lspatch.jar"
 Path_APKTOOL = f"{Path_Patch}/apktool.jar"
 Path_Module_LSPosed = f"{Path_Patch}/yuuki.yuukips.apk"
 Path_Module_LSPosed_Chinese = f"{Path_Patch}/xfk233.genshinproxy.apk"
+Path_SIGNAPK = f"{Path_Patch}/uber-apk-signer-1.2.1.jar"
 Link_LSPatch = "https://github.com/LSPosed/LSPatch/releases/download/v0.5/lspatch.jar"
 Link_Module_LSPosed = "https://elaxan.com/download/Genshin-Android/yuuki.yuukips.apk"
 Link_Module_LSPosed_Chinese = "https://elaxan.com/download/Genshin-Android/xfk233.genshinproxy.apk"
-Usage = f"{Error_Info}Subcommand not entered!\nUsage :\n1. {os.path.basename(sys.argv[0])} -m uninstall\n2. {os.path.basename(sys.argv[0])} -m apk-mitm"
 Link_APKTOOL = "https://elaxan.com/download/apktool/apktool.jar"
+Link_SIGNAPK = "https://github.com/patrickfav/uber-apk-signer/releases/download/v1.2.1/uber-apk-signer-1.2.1.jar"
+
 
 def Help():
-    print("Usage: patchgenshin [option] [file]")
+    print("Usage: patchgenshin [option] [file] [package_name]")
     print("Options:")
     print("  -h, --help\t\tShow this help message and exit")
     print("  -u, --uninstall\tUninstall PatchGenshinAPK")
     print("  -v, --version\t\tShow version")
     print("  -l, --lspatch\t\tPatch Genshin.apk with LSPatch")
     print("  -a, --apkmitm\t\tPatch Genshin.apk with apk-mitm")
-    exit(1)
+    print("  -c, --clone\t\tClone Genshin package name")
+    print("")
+    print("file:")
+    print("Path to APK want to Patch : /sdcard/Genshin.apk")
+    print("")
+    print("package_name:")
+    print("Only for use -c or --clone feature")
+    print("Enter custom package name : com.elaxan.z3ro")
+    print("")
 
 def Download_Files(url: str, path: str):
     Download = requests.get(url, allow_redirects=True)
@@ -84,7 +94,7 @@ def Download_LSPatch():
 def Download_APKTOOL():
     if not Check_Files(Path_APKTOOL):
         print(Progress_Info + "Downloading APKTOOL")
-        Download_Files(Link_APKTOOL, Path_APKTOOL)
+        Download_Files2(Link_APKTOOL, Path_APKTOOL)
         Change_Permission(Path_APKTOOL)
         print(Success_Info + "Downloaded APKTOOL")
     else:
@@ -113,6 +123,15 @@ def Install_apkmitm():
         print(Success_Info + "Installed apk-mitm")
     else:
         print(Progress_Info + "apk-mitm already installed")
+
+def Download_SIGNAPK():
+    if not Check_Files(Path_SIGNAPK):
+        print(Progress_Info + "Downloading uber-apk-signer")
+        Download_Files2(Link_SIGNAPK, Path_SIGNAPK)
+        Change_Permission(Path_SIGNAPK)
+        print(Success_Info + "Downloaded uber-apk-signer")
+    else:
+        print(Progress_Info + "SIGNAPK already uber-apk-signer")
 
 def Check_Requirements_apkmitm():
     if not Check_Files(Path_Patch):

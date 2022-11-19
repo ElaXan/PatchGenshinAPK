@@ -15,6 +15,9 @@ if __name__ == "__main__":
     if os.geteuid() == 0:
         print(Data.Error_Info + "Please run this script as normal user")
         exit(1)
+    if not (os.path.exists("/sdcard")):
+        print(Data.Error_Info + "Please grant storage permission for Termux")
+        exit(1)
     if len(sys.argv) == 1:
         Data.Help()
     elif len(sys.argv) == 2:
@@ -32,6 +35,9 @@ if __name__ == "__main__":
         elif sys.argv[1] == "--lspatch" or sys.argv[1] == "-l":
             print(Data.Error_Info + "Please enter file name")
             exit(1)
+        elif sys.argv[1] == "--clone" or sys.argv[1] == "-c":
+            print(Data.Error_Info + "Please enter file name")
+            exit(1)
         else:
             print(Data.Error_Info + "Wrong input!")
             Data.Help()
@@ -40,8 +46,17 @@ if __name__ == "__main__":
             Menu.apkmitm(sys.argv[2])
         elif sys.argv[1] == "--lspatch" or sys.argv[1] == "-l":
             run.run(sys.argv[2])
+        elif sys.argv[1] == "--clone" or sys.argv[1] == "-c":
+            print(Data.Error_Info + "Please enter Package name")
+            exit(1)
         else:
             print(Data.Error_Info + "Wrong input!")
+            Data.Help()
+    elif len(sys.argv) == 4:
+        if sys.argv[1] == "--clone" or sys.argv[1] == "-c":
+            Menu.CloneAPK(sys.argv[2], sys.argv[3])
+        else:
+            print(Data.Error_Info + "Please enter package name!")
             Data.Help()
     else:
         print(Data.Error_Info + "Wrong input!")
