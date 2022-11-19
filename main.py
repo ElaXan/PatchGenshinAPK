@@ -54,9 +54,15 @@ if __name__ == "__main__":
             Data.Help()
     elif len(sys.argv) == 4:
         if sys.argv[1] == "--clone" or sys.argv[1] == "-c":
-            Menu.CloneAPK(sys.argv[2], sys.argv[3])
+            Menu.CloneAPK(sys.argv[2], sys.argv[3], "")
         else:
             print(Data.Error_Info + "Please enter package name!")
+            Data.Help()
+    elif len(sys.argv) == 5:
+        if sys.argv[1] == "--clone" or sys.argv[1] == "-c":
+            Menu.CloneAPK(sys.argv[2], sys.argv[3], sys.argv[4])
+        else:
+            print(Data.Error_Info + "Please enter Custom Name APK!")
             Data.Help()
     else:
         print(Data.Error_Info + "Wrong input!")

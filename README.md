@@ -35,7 +35,7 @@ See [Clone APK](#clone-apk) for how to use it
 
 ```sh
 ~$ patchgenshin --help
-Usage: patchgenshin [option] [file] [package_name]
+Usage: patchgenshin [option] [file] [package_name] [custom_name_apk]
 Options:
   -h, --help            Show this help message and exit
   -u, --uninstall       Uninstall PatchGenshinAPK
@@ -43,6 +43,7 @@ Options:
   -l, --lspatch         Patch Genshin.apk with LSPatch
   -a, --apkmitm         Patch Genshin.apk with apk-mitm
   -c, --clone           Clone Genshin package name
+  -up, --update         Update PatchGenshinAPK
 
 file:
 Path to APK want to Patch : /sdcard/Genshin.apk
@@ -51,6 +52,9 @@ package_name:
 Only for use -c or --clone feature
 Enter custom package name : com.elaxan.z3ro
 
+custom_name_apk:
+Only for use -c or --clone feature
+Enter custom_name_apk : Clone apk by Z3RO
 ```
 
 # Install
@@ -111,3 +115,17 @@ Example:
 > Then it will clone package name for animegame.apk
 
 > If clone success will save to /sdcard with file name animegame-clone-Z3RO.apk
+
+If you want to change the name of the cloned APK, you can use the following command:
+```sh
+~$ patchgenshin -c <path to APK> <package name> <custom name apk>
+``` 
+
+Example:
+```sh
+~$ patchgenshin -c /sdcard/animegame.apk com.elaxan.z3ro "Clone apk by Z3RO"
+```
+
+> Then it will clone package name with custom apk name for animegame.apk
+
+> If clone success will save to /sdcard with file name Clone apk by Z3RO.apk

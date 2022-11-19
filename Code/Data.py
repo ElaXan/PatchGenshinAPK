@@ -5,7 +5,7 @@ from pathlib import Path
 from time import sleep
 import requests
 
-Version = "1.0.2"
+Version = "1.0.3"
 Error_Info = Color.RED + "E: " + Color.RESET
 Progress_Info = Color.GREEN + "I: " + Color.RESET
 Warning_Info = Color.YELLOW + "W: " + Color.RESET
@@ -28,7 +28,7 @@ Link_SIGNAPK = "https://github.com/patrickfav/uber-apk-signer/releases/download/
 
 
 def Help():
-    print("Usage: patchgenshin [option] [file] [package_name]")
+    print("Usage: patchgenshin [option] [file] [package_name] [custom_name_apk]")
     print("Options:")
     print("  -h, --help\t\tShow this help message and exit")
     print("  -u, --uninstall\tUninstall PatchGenshinAPK")
@@ -36,6 +36,7 @@ def Help():
     print("  -l, --lspatch\t\tPatch Genshin.apk with LSPatch")
     print("  -a, --apkmitm\t\tPatch Genshin.apk with apk-mitm")
     print("  -c, --clone\t\tClone Genshin package name")
+    print("  -up, --update\t\tUpdate PatchGenshinAPK")
     print("")
     print("file:")
     print("Path to APK want to Patch : /sdcard/Genshin.apk")
@@ -43,6 +44,10 @@ def Help():
     print("package_name:")
     print("Only for use -c or --clone feature")
     print("Enter custom package name : com.elaxan.z3ro")
+    print("")
+    print("custom_name_apk:")
+    print("Only for use -c or --clone feature")
+    print("Enter custom_name_apk : \"Clone apk by Z3RO\"")
     print("")
 
 def Download_Files(url: str, path: str):

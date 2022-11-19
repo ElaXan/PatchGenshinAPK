@@ -126,7 +126,24 @@ def Update():
             exit(1)
 
 
-def CloneAPK(filename: str, name_to_clone: str):
+def CloneAPK(filename: str, name_to_clone: str, custom_apk_name: str):
+    if (custom_apk_name == ""):
+        print(Data.Warning_Info + "You didn't set custom apk name, so the cloned apk will be named as the original apk")
+        custom_apk_name = False
+    else:
+        print(Data.Progress_Info + "Custom apk name set to " + custom_apk_name)
+    if not (os.path.exists(Data.Path_APKTOOL)):
+        print(Data.Progress_Info + "Downloading APKTOOL...")
+        try:
+            Data.Download_APKTOOL()
+        except Exception as e:
+            print(Data.Error_Info + "Error while downloading APKTOOL", e)
+            exit(1)
+        if (os.path.exists(Data.Path_APKTOOL)):
+            print(Data.Success_Info + "Success download APKTOOL")
+        else:
+            print(Data.Error_Info + "Failed download APKTOOL")
+            exit(1)
     if not (os.path.exists(Data.Path_SIGNAPK)):
         Data.Download_SIGNAPK()
     if not (os.path.exists(filename)):
@@ -146,9 +163,9 @@ def CloneAPK(filename: str, name_to_clone: str):
         print(Data.Error_Info + f"Error while copying {filename} to {Data.Path_Patch}", e)
         exit(1)
     if (os.path.exists(f"{Data.Path_Patch}/{os.path.basename(filename)}")):
-        print(Data.Success_Info + f"Success copy {filename} to {Data.Path_Patch}")
+        print(Data.Success_Info + f"Success copy {os.path.basename(filename)} to {Data.Path_Patch}")
     else:
-        print(Data.Error_Info + f"Failed copy {filename} to {Data.Path_Patch}")
+        print(Data.Error_Info + f"Failed copy {os.path.basename(filename)} to {Data.Path_Patch}")
         exit(1)
     try:
         with zipfile.ZipFile(f"{Data.Path_APKTOOL}") as z:
@@ -164,7 +181,8 @@ def CloneAPK(filename: str, name_to_clone: str):
         Data.Download_APKTOOL()
     try:
         os.chdir(Data.Path_Patch)
-        os.system(f"java -jar {Data.Path_APKTOOL} d {os.path.basename(filename)} -o decompiling_zex")
+        print(Data.Progress_Info + "Decompressing apk...")
+        os.system(f"java -jar {Data.Path_APKTOOL} d {os.path.basename(filename)} -o decompiling_zex -f > /dev/null 2>&1")
     except Exception as e:
         print(Data.Error_Info + f"Error while decompiling {filename}", e)
         exit(1)
@@ -174,6 +192,8 @@ def CloneAPK(filename: str, name_to_clone: str):
     if (os.stat(f"{Data.Path_Patch}/decompiling_zex").st_size == 0):
         print(Data.Error_Info + f"Failed decompiling {filename}")
         exit(1)
+    if (custom_apk_name == ""):
+        custom_apk_name = False
     try:
         with open(f"{Data.Path_Patch}/decompiling_zex/AndroidManifest.xml", "r") as f:
             manifest = f.read()
@@ -182,11 +202,23 @@ def CloneAPK(filename: str, name_to_clone: str):
             print(Data.Progress_Info + "Writing to AndroidManifest.xml to change package name...")
             f.write(manifest)
             sleep(1)
+        if (custom_apk_name):
+            with open(f"{Data.Path_Patch}/decompiling_zex/AndroidManifest.xml", "r") as f:
+                manifest = f.read()
+            manifest = re.sub(r'android:label="(.+?)"', f'android:label="{custom_apk_name}"', manifest)
+            with open(f"{Data.Path_Patch}/decompiling_zex/AndroidManifest.xml", "w") as f:
+                print(Data.Progress_Info + f"Writing to AndroidManifest.xml to change app name [{custom_apk_name}]...")
+                f.write(manifest)
+                sleep(1)
+        else:
+            print(Data.Progress_Info + "Skipping changing app name...")
     except Exception as e:
         print(Data.Error_Info + f"Error while editing manifest {filename}", e)
         exit(1)
+    print(Data.Progress_Info + "Writing AndroidManifest.xml is completed")
+    print(Data.Progress_Info + "Recompiling apk...")
     try:
-        os.system(f"java -jar {Data.Path_APKTOOL} b decompiling_zex -o {os.path.basename(filename)}.patched.apk")
+        os.system(f"java -jar {Data.Path_APKTOOL} b decompiling_zex -o {os.path.basename(filename)}.patched.apk > /dev/null 2>&1")
     except Exception as e:
         print(Data.Error_Info + f"Error while compiling {filename}", e)
         exit(1)
@@ -211,7 +243,7 @@ def CloneAPK(filename: str, name_to_clone: str):
             exit(1)
         Data.Download_SIGNAPK()
     try:
-        os.system(f"java -jar {Data.Path_SIGNAPK} --apks {os.path.basename(filename)}.patched.apk")
+        os.system(f"java -jar {Data.Path_SIGNAPK} --apks {os.path.basename(filename)}.patched.apk > /dev/null 2>&1")
     except Exception as e:
         print(Data.Error_Info + f"Error while signing {filename}", e)
         print(Data.Progress_Info + "Cleaning up...")
