@@ -11,26 +11,16 @@ def run(file_apk_to_patch: str):
     if not (which("java")):
         Data.Install_Program("openjdk-17")
     Data.Check_Requirements_LSPatch()
+    # if file_apk_to_patch is null, then exit with print File not found
     if (file_apk_to_patch == ""):
-        try:
-            user_input = input("Enter file Genshin.apk : ")
-            if (user_input == ""):
-                while (user_input == ""):
-                    # If user not entered path to Genshin.apk
-                    print(Data.Error_Info + "Please enter path!")
-                    sleep(1)
-                    user_input = input("Enter file Genshin.apk : ")
-        except KeyboardInterrupt:
-            print("Exit/Cancel by User")
-            exit(1)
-    else:
-        user_input = file_apk_to_patch
+        print(Data.Error_Info + "File not found!...\nExit with code 1")
+        exit(1)
     # If user_input is not file .apk
-    if not (user_input.endswith(".apk")):
+    if not (file_apk_to_patch.endswith(".apk")):
         print(Data.Error_Info + "File is not .apk")
         exit(1)
     # If user_input file not found
-    if not (os.path.exists(user_input)):
+    if not (os.path.exists(file_apk_to_patch)):
         print(Data.Error_Info + "File not found!")
         exit(1)
     # If Folder Path.home() + "/.ElaXan" not found, will be create immediately
@@ -39,9 +29,9 @@ def run(file_apk_to_patch: str):
     
     if not (os.path.exists(Data.Path_Patch)):
         os.mkdir(Data.Path_Patch)
-    print(Data.Progress_Info + "Copying files from " + user_input + " to " + Data.Path_Patch)
+    print(Data.Progress_Info + "Copying files from " + file_apk_to_patch + " to " + Data.Path_Patch)
     # Copying files
-    shutil.copy(user_input, Data.Path_Patch)
+    shutil.copy(file_apk_to_patch, Data.Path_Patch)
     if not (os.path.exists(Data.Path_Module)):
         try:
             # Downloading lspatch.jar if its not exists/found
@@ -60,7 +50,7 @@ def run(file_apk_to_patch: str):
             # If Failed download, this message will appear
             print(Data.Error_Info + "Cant download module LSPosed\nReason : ", e)
             exit(1)
-    Getting_FileName = os.path.basename(user_input)
+    Getting_FileName = os.path.basename(file_apk_to_patch)
     Getting_FileName_Module = os.path.basename(Data.Path_Module_LSPosed)
     try:
         # Change Directory

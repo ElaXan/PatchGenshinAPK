@@ -34,33 +34,21 @@ def Uninstall():
 def apkmitm(File_Name: str):
     os.chdir(Path.home())
     Data.Check_Requirements_apkmitm()
-    # if KeyboardInterrupt then print Canceled by User
-    try:
-        # If File_Name is null, then ask user to input file name Apk_to_patch
-        if (File_Name == ""):
-            Apk_to_Patch = input("Enter file Genshin.apk : ")
-            if (Apk_to_Patch == ""):
-                while (Apk_to_Patch == ""):
-                    # If user not entered path to Genshin.apk
-                    print(Data.Error_Info + "Please enter path!")
-                    sleep(1)
-                    Apk_to_Patch = input("Enter file Genshin.apk : ")
-        else:
-            Apk_to_Patch = File_Name
-    except KeyboardInterrupt:
-        print(Data.Cancel_Info + "Canceled by User")
+    # If File_Name file not found, then exit with print File not found
+    if (File_Name == ""):
+        print(Data.Error_Info + "File not found!...\nExit with code 1")
         exit(1)
-    if not (os.path.exists(Apk_to_Patch)):
-        print(Data.Error_Info + Apk_to_Patch + " not found!...\nExit with code 1")
+    if not (os.path.exists(File_Name)):
+        print(Data.Error_Info + File_Name + " not found!...\nExit with code 1")
         exit(1)
     # if not file is apk
-    if not (Apk_to_Patch.endswith(".apk")):
-        print(Data.Error_Info + Apk_to_Patch + " is not apk file!...\nExit with code 1")
+    if not (File_Name.endswith(".apk")):
+        print(Data.Error_Info + File_Name + " is not apk file!...\nExit with code 1")
         exit(1)
     os.chdir(Path.home())
-    print(Data.Progress_Info + f"Patching {os.path.basename(Apk_to_Patch)}")
+    print(Data.Progress_Info + f"Patching {os.path.basename(File_Name)}")
     try:
-        os.system(f"apk-mitm --apktool {Data.Path_APKTOOL} {Apk_to_Patch}")
+        os.system(f"apk-mitm --apktool {Data.Path_APKTOOL} {File_Name}")
     except KeyboardInterrupt:
         print(Data.Error_Info + "Exit/Cancel by User")
         exit(1)
@@ -68,7 +56,7 @@ def apkmitm(File_Name: str):
         print(Data.Error_Info + "Error while patching...", e)
         exit(1)
     print(Data.Progress_Info + "Trying move .apk/.apks to /sdcard")
-    Name_Patch = re.sub(r".apk$", "", os.path.basename(Apk_to_Patch))
+    Name_Patch = re.sub(r".apk$", "", os.path.basename(File_Name))
     File_Move = f"{Name_Patch}-patched.apk"
     try:
         shutil.move("./" + File_Move, f"/sdcard/{Name_Patch}-Z3RO.apk")
