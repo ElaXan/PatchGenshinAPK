@@ -1,6 +1,7 @@
 # PatchGenshinAPK
 
-Tool for patching .apk on Android Phone using Termux.
+Tool for patching .apk on Android Phone using Termux.\
+Interaction using CLI (Command Line Interface) unlike [AnimeGamePatch](https://github.com/Score-Inc/AnimeGamePatch) and [GCAndroid](https://github.com/Score-Inc/GCAndroid)
 
 ## Note
 
@@ -35,7 +36,7 @@ See [Clone APK](#clone-apk) for how to use it
 
 ```sh
 ~$ patchgenshin --help
-Usage: patchgenshin [option] [file] [package_name | True / False] [custom_name_apk]
+Usage: patchgenshin [option] [file] [package_name | True / False] [custom_name_apk | 1 / 2]
 Options:
   -h, --help            Show this help message and exit
   -u, --uninstall       Uninstall PatchGenshinAPK
@@ -60,6 +61,12 @@ True / False:
 Only for use -l or --lspatch feature
 True: Patch with 2 Modules LSPosed
 False: Patch with 1 Modules LSPosed
+
+1 / 2:
+Only for use -l or --lspatch feature
+If you choose False for True / False
+1: Patch with Yuuki Modules
+2: Patch with xfk233 Modules
 ```
 
 # Install
@@ -88,6 +95,15 @@ Example:
 > Then it will patch for animegame.apk with 2 modules.
 
 > If you want to patch with 1 module, just change True to False
+
+Example:
+```sh
+~$ patchgenshin -l /sdcard/animegame.apk False 1
+```
+
+> Then it will patch for animegame.apk with Yuuki module.
+
+> If you want to patch with xfk Module, then change it 1 to 2
 
 > If patch success will save to /sdcard with file name animegame-ElaXan.apk
 
@@ -120,8 +136,6 @@ Example:
 ```
 
 > Then it will clone package name for animegame.apk
-
-> If clone success will save to /sdcard with file name animegame-clone-Z3RO.apk
 
 If you want to change the name of the cloned APK, you can use the following command:
 ```sh

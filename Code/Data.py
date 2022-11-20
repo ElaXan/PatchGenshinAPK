@@ -5,7 +5,7 @@ from pathlib import Path
 from time import sleep
 import requests
 
-Version = "1.0.4"
+Version = "1.0.5"
 Error_Info = Color.RED + "E: " + Color.RESET
 Progress_Info = Color.GREEN + "I: " + Color.RESET
 Warning_Info = Color.YELLOW + "W: " + Color.RESET
@@ -28,7 +28,7 @@ Link_SIGNAPK = "https://github.com/patrickfav/uber-apk-signer/releases/download/
 
 
 def Help():
-    print("Usage: patchgenshin [option] [file] [package_name | True / False] [custom_name_apk]")
+    print("Usage: patchgenshin [option] [file] [package_name | True / False] [custom_name_apk | 1 / 2]")
     print("Options:")
     print("  -h, --help\t\tShow this help message and exit")
     print("  -u, --uninstall\tUninstall PatchGenshinAPK")
@@ -53,6 +53,12 @@ def Help():
     print("Only for use -l or --lspatch feature")
     print("True: Patch with 2 Modules LSPosed")
     print("False: Patch with 1 Modules LSPosed")
+    print("")
+    print("1 / 2:")
+    print("Only for use -l or --lspatch feature")
+    print("If you choose False for True / False")
+    print("1: Patch with Yuuki Modules")
+    print("2: Patch with xfk233 Modules")
     print("")
 
 def Download_Files(url: str, path: str):

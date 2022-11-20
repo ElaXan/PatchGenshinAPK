@@ -4,13 +4,24 @@ import Code.Data as Data
 from shutil import which
 from pathlib import Path
 
-def run(file_apk_to_patch: str, use_2_modules: bool = False):
+def run(file_apk_to_patch: str, use_2_modules: bool = False, Modules_use_for_1_patch: str = "Not_Set"):
     if use_2_modules == "False" or use_2_modules == "false":
         print(Data.Progress_Info + "Using 1 modules for Patching")
     elif use_2_modules == "True" or use_2_modules == "true":
         print(Data.Progress_Info + "Using 2 modules for Patching")
     else:
         print(Data.Warning_Info + "Using 1 modules for Patching")
+    if Modules_use_for_1_patch == "Not_Set":
+        print(Data.Warning_Info + "Choosing Modules for Patching is not set, will use as default to YuukiModule")
+        Modules_use_for_1_patch = "YuukiModule"
+    if Modules_use_for_1_patch == "YuukiModule" or Modules_use_for_1_patch == "1":
+        print(Data.Progress_Info + "Using Yuuki Module for Patching")
+    elif Modules_use_for_1_patch == "xfk233" or Modules_use_for_1_patch == "2":
+        print(Data.Progress_Info + "Using xfk233 Module for Patching")
+    else:
+        print(Data.Warning_Info + "Using Yuuki Module for Patching")
+        Modules_use_for_1_patch = "YuukiModule"
+
     os.chdir(Data.Path_Patch)
     if not (which("java")):
         Data.Install_Program("openjdk-17")
@@ -52,7 +63,12 @@ def run(file_apk_to_patch: str, use_2_modules: bool = False):
         os.chdir(Data.Path_Patch)
         print(Data.Progress_Info + "Patching " + os.path.basename(file_apk_to_patch))
         if use_2_modules == "False" or use_2_modules == "false":
-            os.system("java -jar lspatch.jar " + Getting_FileName + " -m " + Getting_FileName_Module + " > /dev/null 2>&1")
+            if Modules_use_for_1_patch == "YuukiModule" or Modules_use_for_1_patch == "1":
+                os.system(f"java -jar lspatch.jar {file_apk_to_patch} -m {Getting_FileName_Module} > /dev/null 2>&1")
+            elif Modules_use_for_1_patch == "xfk233" or Modules_use_for_1_patch == "2":
+                os.system(f"java -jar lspatch.jar {file_apk_to_patch} -m {Getting_FileName_Module2} > /dev/null 2>&1")
+            else:
+                os.system(f"java -jar lspatch.jar {file_apk_to_patch} -m {Getting_FileName_Module} > /dev/null 2>&1")
         elif use_2_modules == "True" or use_2_modules == "true":
             os.system("java -jar lspatch.jar " + Getting_FileName + " -m " + Getting_FileName_Module + " -m " + Getting_FileName_Module2 + " > /dev/null 2>&1")
         else:
