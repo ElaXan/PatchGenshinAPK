@@ -5,7 +5,7 @@ from pathlib import Path
 from time import sleep
 import requests
 
-Version = "1.0.3"
+Version = "1.0.4"
 Error_Info = Color.RED + "E: " + Color.RESET
 Progress_Info = Color.GREEN + "I: " + Color.RESET
 Warning_Info = Color.YELLOW + "W: " + Color.RESET
@@ -66,6 +66,14 @@ def Download_Files2(url: str, path: str):
 def Move_Files(path: str, path2: str):
     os.system("mv " + path + " " + path2 + " > /dev/null 2>&1")
     sleep(1)
+
+def Remove_Files_Folder(path: str):
+    if Check_Files(path):
+        print(Progress_Info + "Removing " + path)
+        os.system("rm -rf " + path + " > /dev/null 2>&1")
+        print(Success_Info + "Removed " + path)
+    else:
+        print(Progress_Info + path + " not found")
 
 def Change_Permission(path: str):
     os.system("chmod 777 " + path + " > /dev/null 2>&1")
@@ -158,3 +166,14 @@ def Check_Requirements_LSPatch():
         Download_LSPatch()
         Download_Module_LSPosed()
         Download_Chinese_Module()
+
+def Clone_Cleaning(apk_user: str):
+    print(Progress_Info + "Cleaning Up...")
+    try:
+        if Check_Files(f"{Path_Patch}/decompiling_zex"):
+            Remove_Files_Folder(f"{Path_Patch}/decompiling_zex")
+        if Check_Files(apk_user):
+            Remove_Files_Folder(apk_user)
+    except Exception as e:
+        print(Error_Info + "Error : " + str(e))
+        pass

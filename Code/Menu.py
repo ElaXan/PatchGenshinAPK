@@ -84,7 +84,7 @@ def Update():
     with open("PatchGenshinAPK.json", "r") as f:
         json_file = f.read()
     if (Data.Version in json_file):
-        print(Data.Progress_Info + "You are using the latest version")
+        print(Data.Progress_Info + "You are using the latest version (" + Data.Version + ")")
         os.remove("PatchGenshinAPK.json")
         exit(0)
     else:
@@ -132,6 +132,7 @@ def CloneAPK(filename: str, name_to_clone: str, custom_apk_name: str):
         custom_apk_name = False
     else:
         print(Data.Progress_Info + "Custom apk name set to " + custom_apk_name)
+
     if not (os.path.exists(Data.Path_APKTOOL)):
         print(Data.Progress_Info + "Downloading APKTOOL...")
         try:
@@ -139,22 +140,28 @@ def CloneAPK(filename: str, name_to_clone: str, custom_apk_name: str):
         except Exception as e:
             print(Data.Error_Info + "Error while downloading APKTOOL", e)
             exit(1)
+
         if (os.path.exists(Data.Path_APKTOOL)):
             print(Data.Success_Info + "Success download APKTOOL")
         else:
             print(Data.Error_Info + "Failed download APKTOOL")
             exit(1)
+
     if not (os.path.exists(Data.Path_SIGNAPK)):
         Data.Download_SIGNAPK()
+
     if not (os.path.exists(filename)):
         print(Data.Error_Info + f"{filename} not found!...\nExit with code 1")
         exit(1)
+
     if (os.stat(filename).st_size == 0):
         print(Data.Error_Info + f"{filename} is empty!...\nExit with code 1")
         exit(1)
+
     if (name_to_clone == ""):
         print(Data.Error_Info + "Error: name_to_clone is null")
         exit(1)
+
     if (os.path.exists(f"{Data.Path_Patch}/{name_to_clone}.apk")):
         os.remove(f"{Data.Path_Patch}/{name_to_clone}.apk")
     try:
@@ -162,11 +169,13 @@ def CloneAPK(filename: str, name_to_clone: str, custom_apk_name: str):
     except Exception as e:
         print(Data.Error_Info + f"Error while copying {filename} to {Data.Path_Patch}", e)
         exit(1)
+
     if (os.path.exists(f"{Data.Path_Patch}/{os.path.basename(filename)}")):
         print(Data.Success_Info + f"Success copy {os.path.basename(filename)} to {Data.Path_Patch}")
     else:
         print(Data.Error_Info + f"Failed copy {os.path.basename(filename)} to {Data.Path_Patch}")
         exit(1)
+
     try:
         with zipfile.ZipFile(f"{Data.Path_APKTOOL}") as z:
             z.testzip()
@@ -179,6 +188,7 @@ def CloneAPK(filename: str, name_to_clone: str, custom_apk_name: str):
             print(Data.Error_Info + f"Error while removing {Data.Path_APKTOOL}", e)
             exit(1)
         Data.Download_APKTOOL()
+
     try:
         os.chdir(Data.Path_Patch)
         print(Data.Progress_Info + "Decompressing apk...")
@@ -186,14 +196,34 @@ def CloneAPK(filename: str, name_to_clone: str, custom_apk_name: str):
     except Exception as e:
         print(Data.Error_Info + f"Error while decompiling {filename}", e)
         exit(1)
+
     if not (os.path.exists(f"{Data.Path_Patch}/decompiling_zex")):
         print(Data.Error_Info + f"Failed decompiling {filename}")
         exit(1)
+
     if (os.stat(f"{Data.Path_Patch}/decompiling_zex").st_size == 0):
         print(Data.Error_Info + f"Failed decompiling {filename}")
         exit(1)
-    if (custom_apk_name == ""):
-        custom_apk_name = False
+
+    try:
+        with open(f"{Data.Path_Patch}/decompiling_zex/AndroidManifest.xml", "r") as f:
+            text = f.read()
+            if not ("com.miHoYo.GenshinImpact" in text):
+                Data.Clone_Cleaning(os.path.basename(filename))
+                print(Data.Error_Info + "Error: com.miHoYo.GenshinImpact not found in AndroidManifest.xml")
+                print(Data.Cancel_Info + "Exit with code 1")
+                exit(1)
+    except Exception as e:
+        print(Data.Error_Info + f"Error while reading AndroidManifest.xml", e)
+        exit(1)
+
+    if (custom_apk_name):
+        if (custom_apk_name in text):
+            Data.Clone_Cleaning(os.path.basename(filename))
+            print(Data.Error_Info + "Error: custom apk name is same in androidmanifest.xml")
+            print(Data.Cancel_Info + "Exit with code 1")
+            exit(1)
+    
     try:
         with open(f"{Data.Path_Patch}/decompiling_zex/AndroidManifest.xml", "r") as f:
             manifest = f.read()
@@ -215,7 +245,7 @@ def CloneAPK(filename: str, name_to_clone: str, custom_apk_name: str):
     except Exception as e:
         print(Data.Error_Info + f"Error while editing manifest {filename}", e)
         exit(1)
-    print(Data.Progress_Info + "Writing AndroidManifest.xml is completed")
+    print(Data.Success_Info + "Writing AndroidManifest.xml is completed")
     print(Data.Progress_Info + "Recompiling apk...")
     try:
         os.system(f"java -jar {Data.Path_APKTOOL} b decompiling_zex -o {os.path.basename(filename)}.patched.apk > /dev/null 2>&1")
@@ -228,7 +258,6 @@ def CloneAPK(filename: str, name_to_clone: str, custom_apk_name: str):
     if (os.stat(f"{Data.Path_Patch}/{os.path.basename(filename)}.patched.apk").st_size == 0):
         print(Data.Error_Info + f"Failed compiling {filename}")
         exit(1)
-    print(Data.Success_Info + f"Success clone {os.path.basename(filename)} to {name_to_clone}")
     print(Data.Progress_Info + "Signing APK...")
     try:
         with zipfile.ZipFile(f"{Data.Path_SIGNAPK}") as z:
@@ -245,27 +274,17 @@ def CloneAPK(filename: str, name_to_clone: str, custom_apk_name: str):
     try:
         os.system(f"java -jar {Data.Path_SIGNAPK} --apks {os.path.basename(filename)}.patched.apk > /dev/null 2>&1")
     except Exception as e:
+        Data.Clone_Cleaning(os.path.basename(filename))
         print(Data.Error_Info + f"Error while signing {filename}", e)
-        print(Data.Progress_Info + "Cleaning up...")
-        try:
-            os.remove(f"{Data.Path_Patch}/{os.path.basename(filename)}.patched.apk")
-            shutil.rmtree(f"{Data.Path_Patch}/decompiling_zex")
-            os.remove(f"{Data.Path_Patch}/{os.path.basename(filename)}")
-            exit(1)
-        except Exception as e:
-            print(Data.Error_Info + f"Error while cleaning up {filename}", e)
-            exit(1)
+        exit(1)
     if (os.path.exists(f"{Data.Path_Patch}/{os.path.basename(filename)}.patched-aligned-debugSigned.apk")):
         print(Data.Success_Info + f"Success sign {os.path.basename(filename)}.patched.apk")
-        print(Data.Progress_Info + "Cleaning up...")
-        try:
-            os.remove(f"{Data.Path_Patch}/{os.path.basename(filename)}.patched.apk")
-            shutil.rmtree(f"{Data.Path_Patch}/decompiling_zex")
-            os.remove(f"{Data.Path_Patch}/{os.path.basename(filename)}")
-            print(Data.Success_Info + f"Success clone {os.path.basename(filename)} to {name_to_clone}")
-        except Exception as e:
-            print(Data.Error_Info + f"Error while cleaning up {filename}", e)
-            exit(1)
+        print(Data.Success_Info + f"Success clone {os.path.basename(filename)} to {name_to_clone}")
+        Data.Clone_Cleaning(os.path.basename(filename))
+    else:
+        print(Data.Error_Info + f"Failed sign {os.path.basename(filename)}.patched.apk")
+        Data.Clone_Cleaning(os.path.basename(filename))
+        exit(1)
     try:
         print(Data.Progress_Info + "Rename signed APK...")
         os.rename(f"{Data.Path_Patch}/{os.path.basename(filename)}.patched-aligned-debugSigned.apk", f"{Data.Path_Patch}/{os.path.basename(filename)}-clone-Z3RO.apk")
