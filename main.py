@@ -55,6 +55,8 @@ if __name__ == "__main__":
     elif len(sys.argv) == 4:
         if sys.argv[1] == "--clone" or sys.argv[1] == "-c":
             Menu.CloneAPK(sys.argv[2], sys.argv[3], "")
+        elif sys.argv[1] == "--lspath" or sys.argv[1] == "-l":
+            run.run(sys.argv[2], sys.argv[3])
         else:
             print(Data.Error_Info + "Please enter package name!")
             Data.Help()

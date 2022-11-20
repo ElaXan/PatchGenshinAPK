@@ -28,7 +28,7 @@ Link_SIGNAPK = "https://github.com/patrickfav/uber-apk-signer/releases/download/
 
 
 def Help():
-    print("Usage: patchgenshin [option] [file] [package_name] [custom_name_apk]")
+    print("Usage: patchgenshin [option] [file] [package_name | True / False] [custom_name_apk]")
     print("Options:")
     print("  -h, --help\t\tShow this help message and exit")
     print("  -u, --uninstall\tUninstall PatchGenshinAPK")
@@ -48,6 +48,11 @@ def Help():
     print("custom_name_apk:")
     print("Only for use -c or --clone feature")
     print("Enter custom_name_apk : \"Clone apk by Z3RO\"")
+    print("")
+    print("True / False:")
+    print("Only for use -l or --lspatch feature")
+    print("True: Patch with 2 Modules LSPosed")
+    print("False: Patch with 1 Modules LSPosed")
     print("")
 
 def Download_Files(url: str, path: str):

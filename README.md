@@ -35,7 +35,7 @@ See [Clone APK](#clone-apk) for how to use it
 
 ```sh
 ~$ patchgenshin --help
-Usage: patchgenshin [option] [file] [package_name] [custom_name_apk]
+Usage: patchgenshin [option] [file] [package_name | True / False] [custom_name_apk]
 Options:
   -h, --help            Show this help message and exit
   -u, --uninstall       Uninstall PatchGenshinAPK
@@ -54,7 +54,12 @@ Enter custom package name : com.elaxan.z3ro
 
 custom_name_apk:
 Only for use -c or --clone feature
-Enter custom_name_apk : Clone apk by Z3RO
+Enter custom_name_apk : "Clone apk by Z3RO"
+
+True / False:
+Only for use -l or --lspatch feature
+True: Patch with 2 Modules LSPosed
+False: Patch with 1 Modules LSPosed
 ```
 
 # Install
@@ -72,15 +77,17 @@ Make sure you already have AnimeGame.apk for Patch
 
 Commands:
 ```sh
-~$ patchgenshin -l <path to APK>
+~$ patchgenshin -l <path to APK> <True/Falsw>
 ```
 
 Example:
 ```sh
-~$ patchgenshin -l /sdcard/animegame.apk
+~$ patchgenshin -l /sdcard/animegame.apk True
 ```
 
-> Then it will patch for animegame.apk.
+> Then it will patch for animegame.apk with 2 modules.
+
+> If you want to patch with 1 module, just change True to False
 
 > If patch success will save to /sdcard with file name animegame-ElaXan.apk
 

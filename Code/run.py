@@ -2,10 +2,15 @@ import shutil
 import os
 import Code.Data as Data
 from shutil import which
-from time import sleep
 from pathlib import Path
 
-def run(file_apk_to_patch: str):
+def run(file_apk_to_patch: str, use_2_modules: bool = False):
+    if use_2_modules == "False" or use_2_modules == "false":
+        print(Data.Progress_Info + "Using 1 modules for Patching")
+    elif use_2_modules == "True" or use_2_modules == "true":
+        print(Data.Progress_Info + "Using 2 modules for Patching")
+    else:
+        print(Data.Warning_Info + "Using 1 modules for Patching")
     os.chdir(Data.Path_Patch)
     if not (which("java")):
         Data.Install_Program("openjdk-17")
@@ -24,7 +29,7 @@ def run(file_apk_to_patch: str):
     
     if not (os.path.exists(Data.Path_Patch)):
         os.mkdir(Data.Path_Patch)
-    print(Data.Progress_Info + "Copying files from " + file_apk_to_patch + " to " + Data.Path_Patch)
+    print(Data.Progress_Info + "Copying files " + os.path.basename(file_apk_to_patch) + " to " + Data.Path_Patch)
     shutil.copy(file_apk_to_patch, Data.Path_Patch)
     if not (os.path.exists(Data.Path_Module)):
         try:
@@ -42,14 +47,20 @@ def run(file_apk_to_patch: str):
             exit(1)
     Getting_FileName = os.path.basename(file_apk_to_patch)
     Getting_FileName_Module = os.path.basename(Data.Path_Module_LSPosed)
+    Getting_FileName_Module2 = os.path.basename(Data.Path_Module_LSPosed_Chinese)
     try:
         os.chdir(Data.Path_Patch)
-        print(Data.Progress_Info + "Patching Genshin .apk")
-        os.system("java -jar lspatch.jar " + Getting_FileName + " -m " + Getting_FileName_Module)
+        print(Data.Progress_Info + "Patching " + os.path.basename(file_apk_to_patch))
+        if use_2_modules == "False" or use_2_modules == "false":
+            os.system("java -jar lspatch.jar " + Getting_FileName + " -m " + Getting_FileName_Module + " > /dev/null 2>&1")
+        elif use_2_modules == "True" or use_2_modules == "true":
+            os.system("java -jar lspatch.jar " + Getting_FileName + " -m " + Getting_FileName_Module + " -m " + Getting_FileName_Module2 + " > /dev/null 2>&1")
+        else:
+            os.system("java -jar lspatch.jar " + Getting_FileName + " -m " + Getting_FileName_Module + " > /dev/null 2>&1")
+        print(Data.Success_Info + "Patching " + os.path.basename(file_apk_to_patch) + " Done")
         print(Data.Progress_Info + "Trying to move apk")
         Name_Patch = Getting_FileName[:-4] + ""
         File_Move = f"/sdcard/{Name_Patch}-ElaXan.apk"
-        print(Name_Patch)
         shutil.move(Name_Patch + "-348-lspatched.apk", File_Move)
         os.remove(Getting_FileName)
         if not (os.path.exists(File_Move)):
