@@ -63,7 +63,7 @@ if __name__ == "__main__":
     elif len(sys.argv) == 5:
         if sys.argv[1] == "--clone" or sys.argv[1] == "-c":
             Menu.CloneAPK(sys.argv[2], sys.argv[3], sys.argv[4])
-        elif sys.argv[1] == "--lspath" or sys.argv[1] == "-l":
+        elif sys.argv[1] == "--lspatch" or sys.argv[1] == "-l":
             run.run(sys.argv[2], sys.argv[3], sys.argv[4])
         else:
             print(Data.Error_Info + "Please enter Custom Name APK!")
