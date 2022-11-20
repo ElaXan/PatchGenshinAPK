@@ -77,7 +77,7 @@ Make sure you already have AnimeGame.apk for Patch
 
 Commands:
 ```sh
-~$ patchgenshin -l <path to APK> <True/Falsw>
+~$ patchgenshin -l <path to APK> <True/False>
 ```
 
 Example:
